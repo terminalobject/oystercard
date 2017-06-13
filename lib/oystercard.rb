@@ -1,7 +1,8 @@
 class Oystercard
 
 	CARD_LIMIT = 90
-
+	CARD_MIN = 1
+	MINIMUM_CHARGE = 3
 	attr_accessor :balance, :in_use
 
 	def initialize(balance = 0, in_use = false)
@@ -19,7 +20,7 @@ class Oystercard
 	end
 
 	def touch_in
-		fail "Not enough credit - please top up!" unless @balance > 1
+		fail "Not enough credit - please top up!" unless @balance > CARD_MIN
 		@in_use = true
 	end
 
@@ -29,5 +30,9 @@ class Oystercard
 
 	def touch_out
 		@in_use = false
+		deduct(MINIMUM_CHARGE)
 	end
+
+	private :deduct
+
 end
